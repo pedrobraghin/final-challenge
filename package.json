@@ -1,0 +1,26 @@
+{
+  "name": "final-challenge",
+  "version": "1.0.0",
+  "description": "My final challenge as intern at Compass UOL",
+  "main": "server.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pedrobraghin/final-challenge.git"
+  },
+  "keywords": [
+    "nodejs",
+    "mongodb",
+    "express",
+    "rest",
+    "api"
+  ],
+  "author": "Pedro Braghin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pedrobraghin/final-challenge/issues"
+  },
+  "homepage": "https://github.com/pedrobraghin/final-challenge#readme"
+}
