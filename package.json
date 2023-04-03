@@ -4,7 +4,10 @@
   "description": "My final challenge as intern at Compass UOL",
   "main": "server.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build": "tsc",
+    "start": "node ./dist/server.js",
+    "start:dev": "tsnd --rs --transpile-only --respawn ./src/server.ts"
   },
   "repository": {
     "type": "git",
