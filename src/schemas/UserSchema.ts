@@ -1,6 +1,7 @@
 import { Schema, model } from 'mongoose';
+import { OutputUserDTO } from '../interfaces/OutputUserDTO';
 
-const schema = new Schema({
+const schema = new Schema<OutputUserDTO>({
   name: {
     type: String,
     required: true,
@@ -30,7 +31,7 @@ const schema = new Schema({
     required: true,
   },
   qualified: {
-    type: Boolean,
+    type: String,
     required: true,
   },
   patio: {
