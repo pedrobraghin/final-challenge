@@ -18,6 +18,7 @@
     "no-return-await": "off",
     "prefer-destructuring": ["error", { "object": true, "array": false }],
     "no-param-reassign": "error",
-    "no-console": "warn"
+    "no-console": "warn",
+    "@typescript-eslint/no-inferrable-types": "off"
   }
 }
