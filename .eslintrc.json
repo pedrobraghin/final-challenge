@@ -13,7 +13,10 @@
   "plugins": ["@typescript-eslint"],
   "rules": {
     "class-methods-use-this": "off",
-    "no-unused-vars": "error",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      { "argsIgnorePattern": "^_" }
+    ],
     "array-bracket-newline": "warn",
     "no-return-await": "off",
     "prefer-destructuring": ["error", { "object": true, "array": false }],
