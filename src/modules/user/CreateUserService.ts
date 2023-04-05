@@ -3,7 +3,8 @@ import { OutputUserDTO } from '../../interfaces/OutputUserDTO';
 import { IUsersRepository } from '../../repositories/IUsersRepository';
 import { PasswordUtils } from '../../utils/PasswordUtils';
 import FetchAddress from '../../utils/FetchAddress';
-
+import { Validators } from '../../utils/Validators';
+import { ValidationError } from '../../error/ValidationError';
 export class CreateUserService {
   private usersRepository: IUsersRepository;
 
@@ -12,6 +13,12 @@ export class CreateUserService {
   }
 
   async execute(input: InputUserDTO): Promise<OutputUserDTO> {
+    const errors = Validators.validateUser(input);
+
+    if (errors) {
+      throw new ValidationError(errors);
+    }
+
     const address = await FetchAddress.fetchByCep(input.cep);
     const userData = Object.assign(input, address);
 
