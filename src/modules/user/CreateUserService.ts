@@ -1,18 +1,21 @@
 import { InputUserDTO } from '../../interfaces/InputUserDTO';
 import { OutputUserDTO } from '../../interfaces/OutputUserDTO';
-import { IUserRespository } from '../../repositories/IUsersRepository';
+import { IUsersRepository } from '../../repositories/IUsersRepository';
+import { PasswordUtils } from '../../utils/PasswordUtils';
 import FetchAddress from '../../utils/FetchAddress';
 
 export class CreateUserService {
-  private usersRepository: IUserRespository;
+  private usersRepository: IUsersRepository;
 
-  constructor(usersRepository: IUserRespository) {
+  constructor(usersRepository: IUsersRepository) {
     this.usersRepository = usersRepository;
   }
 
   async execute(input: InputUserDTO): Promise<OutputUserDTO> {
     const address = await FetchAddress.fetchByCep(input.cep);
     const userData = Object.assign(input, address);
+
+    userData.password = await PasswordUtils.hashPass(input.password);
 
     const user = await this.usersRepository.create(userData);
     return user;
