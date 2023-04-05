@@ -1,9 +1,9 @@
 import { OutputUserDTO } from '../../interfaces/OutputUserDTO';
 import { InputUserDTO } from '../../interfaces/InputUserDTO';
 import { UserSchema } from '../../schemas/UserSchema';
-import { IUserRespository } from '../IUsersRepository';
+import { IUsersRepository } from '../IUsersRepository';
 
-export class MongoUsersRespotirory implements IUserRespository {
+export class MongoUsersRespotirory implements IUsersRepository {
   async findById(
     id: string,
     fields: string = ''

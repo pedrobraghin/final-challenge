@@ -3,7 +3,7 @@
 import { OutputUserDTO } from '../interfaces/OutputUserDTO';
 import { InputUserDTO } from '../interfaces/InputUserDTO';
 
-export interface IUserRespository {
+export interface IUsersRepository {
   create(input: InputUserDTO): Promise<OutputUserDTO>;
   findById(id: string, fields?: string): Promise<OutputUserDTO | null>;
   findByEmail(email: string, fields?: string): Promise<OutputUserDTO | null>;
