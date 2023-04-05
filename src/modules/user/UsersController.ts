@@ -4,8 +4,10 @@ import { UsersRepository } from './UsersRepository';
 import { InputUserDTO } from '../../interfaces/InputUserDTO';
 import { CreateUserService } from './CreateUserService';
 import { GetUserByIdService } from './GetUserByIdService';
+import { CatchExpressError } from '../../decorators/CatchExpressError';
 
 export class UsersController {
+  @CatchExpressError
   async createUser(req: Request, res: Response, _next: NextFunction) {
     const createUserService = new CreateUserService(UsersRepository);
     const input: InputUserDTO = req.body;
