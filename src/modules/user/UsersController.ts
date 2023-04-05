@@ -3,6 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 import { UsersRepository } from './UsersRepository';
 import { InputUserDTO } from '../../interfaces/InputUserDTO';
 import { CreateUserService } from './CreateUserService';
+import { GetUserByIdService } from './GetUserByIdService';
 
 export class UsersController {
   async createUser(req: Request, res: Response, _next: NextFunction) {
@@ -24,6 +25,17 @@ export class UsersController {
       status: 'success',
       results: users.length,
       data: users,
+    });
+  }
+
+  async getUserById(req: Request, res: Response, _next: NextFunction) {
+    const { id } = req.params;
+    const getUserByIdService = new GetUserByIdService(UsersRepository);
+    const user = await getUserByIdService.execute(id);
+
+    return res.status(200).json({
+      statusbar: 'success',
+      data: user,
     });
   }
 }
