@@ -13,11 +13,11 @@ export default class FetchAddress {
     const response = await axios.get(url);
 
     const address: Address = {
-      complement: response.data.complemento,
-      locality: response.data.localidade,
-      neighborhood: response.data.bairro,
-      patio: response.data.logradouro,
-      uf: response.data.uf,
+      complement: response.data.complemento || ' ',
+      locality: response.data.localidade || ' ',
+      neighborhood: response.data.bairro || ' ',
+      patio: response.data.logradouro || ' ',
+      uf: response.data.uf || ' ',
     };
     return address;
   }
