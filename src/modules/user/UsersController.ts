@@ -1,3 +1,4 @@
+import { DeleteUserByIdService } from './DeleteUserByIdService';
 import { GetAllUsersService } from './GetAllUsersService';
 import { Request, Response, NextFunction } from 'express';
 import { UsersRepository } from './UsersRepository';
@@ -48,6 +49,16 @@ export class UsersController {
       statusbar: 'success',
       data: user,
     });
+  }
+
+  @CatchExpressError
+  async deleteUserById(req: Request, res: Response, _next: NextFunction) {
+    const { id } = req.params;
+    const deleteUserByIdService = new DeleteUserByIdService(UsersRepository);
+
+    await deleteUserByIdService.execute(id);
+
+    return res.status(204).json({});
   }
 }
 
