@@ -21,9 +21,10 @@ export class MongoErrors {
     switch (err.code) {
       case 11000:
         error.message = `'${key}' already exists. Please login or create an account with other ${key}.`;
+        error.statusCode = 400;
         break;
       default:
-        console.log(err);
+        console.error(err);
         error.message = 'Something went wrong. Please try again later.';
         error.statusCode = 500;
     }
