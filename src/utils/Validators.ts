@@ -1,7 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { InputUserDTO } from '../interfaces/InputUserDTO';
-import { createUserSchema } from '../validators/userValidator';
+import {
+  createUserSchema,
+  updateUserSchema,
+} from '../validators/userValidator';
 import { ValidationError, ValidationResult } from 'joi';
 
 interface IndexableObject {
@@ -9,13 +12,24 @@ interface IndexableObject {
 }
 
 export class Validators {
-  static validateUser(input: InputUserDTO) {
+  static validateCreateUserInputData(input: InputUserDTO) {
     const err: ValidationResult<InputUserDTO> = createUserSchema.validate(
       input,
       {
         abortEarly: false,
       }
     );
+    if (err.error) {
+      return this.parseError(err.error);
+    }
+    return null;
+  }
+
+  static validateUpdateUserInputData(input: Partial<InputUserDTO>) {
+    const err: ValidationResult<Partial<InputUserDTO>> =
+      updateUserSchema.validate(input, {
+        abortEarly: false,
+      });
     if (err.error) {
       return this.parseError(err.error);
     }
