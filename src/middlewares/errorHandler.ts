@@ -1,7 +1,8 @@
 import { MongoError } from 'mongodb';
-import { ValidationError } from '../error/ValidationError';
 import { Request, Response, NextFunction } from 'express';
 import { MongoErrors } from '../utils/MongoErrors';
+import { BaseError } from '../error/BaseError';
+import { ValidationError } from '../error/ValidationError';
 
 export function errorHandler(
   err: Error,
@@ -20,7 +21,15 @@ export function errorHandler(
   if (err instanceof ValidationError) {
     return res.status(err.statusCode).json({
       status: 'fail',
+      message: err.message,
       errors: err.errors,
+    });
+  }
+
+  if (err instanceof BaseError) {
+    return res.status(err.statusCode).json({
+      status: 'fail',
+      message: err.message,
     });
   }
 
