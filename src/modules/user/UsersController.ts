@@ -40,6 +40,7 @@ export class UsersController {
     });
   }
 
+  @CatchExpressError
   async getUserById(req: Request, res: Response, _next: NextFunction) {
     const { id } = req.params;
     const getUserByIdService = new GetUserByIdService(UsersRepository);
