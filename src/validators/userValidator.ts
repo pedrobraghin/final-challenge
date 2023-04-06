@@ -45,7 +45,7 @@ export const createUserSchema = joiExtended.object({
 });
 
 export const updateUserSchema = joiExtended.object({
-  name: joiExtended.string().required(),
+  name: joiExtended.string().optional(),
   cpf: joiExtended.string().regex(cpfRegex).optional().messages({
     'string.pattern.base':
       'Invalid CPF! CPF must follow pattern: XXX.XXX.XXX-XX.',
@@ -54,7 +54,7 @@ export const updateUserSchema = joiExtended.object({
     .date()
     .format('DD-MM-YYYY')
     .max(minBirthDate)
-    .required()
+    .optional()
     .messages({
       'date.max': 'You must be at least 18 years old!',
     }),
