@@ -7,6 +7,7 @@ import { CreateUserService } from './CreateUserService';
 import { GetUserByIdService } from './GetUserByIdService';
 import { CatchExpressError } from '../../decorators/CatchExpressError';
 import { AuthenticateUserService } from './AuthenticateUserService';
+import { UpdateUserService } from './UpdateUserService';
 
 export class UsersController {
   @CatchExpressError
@@ -74,6 +75,20 @@ export class UsersController {
     res.set('Authorization', `Bearer ${token}`);
 
     return res.status(200).send();
+  }
+
+  @CatchExpressError
+  async updateUser(req: Request, res: Response, _next: NextFunction) {
+    const { id } = req.params;
+
+    const input: Partial<InputUserDTO> = req.body;
+    const updateUserService = new UpdateUserService(UsersRepository);
+    const updatedUser = await updateUserService.execute(id, input);
+
+    return res.status(200).json({
+      status: 'success',
+      data: updatedUser,
+    });
   }
 }
 
