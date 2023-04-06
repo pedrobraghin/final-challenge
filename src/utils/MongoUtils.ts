@@ -1,5 +1,5 @@
 import { MongoError } from 'mongodb';
-import mongoose from 'mongoose';
+import { isObjectIdOrHexString } from 'mongoose';
 
 interface ResolvedError {
   message: string;
@@ -33,6 +33,6 @@ export class MongoUtils {
   }
 
   static isValidId(id: string): boolean {
-    return mongoose.Types.ObjectId.isValid(id);
+    return isObjectIdOrHexString(id);
   }
 }
