@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { ValidationError } from '../error/ValidationError';
 interface Address {
   patio: string;
   complement: string;
@@ -11,6 +12,10 @@ export default class FetchAddress {
   static async fetchByCep(cep: string): Promise<Address> {
     const url = `https://viacep.com.br/ws/${cep}/json`;
     const response = await axios.get(url);
+
+    if (response.data.erro) {
+      throw new ValidationError({ cep: 'CEP not found.' });
+    }
 
     const address: Address = {
       complement: response.data.complemento || ' ',
