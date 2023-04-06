@@ -20,9 +20,17 @@ export class MongoUsersRespotirory implements IUsersRepository {
     return user;
   }
 
-  async index(fields: string = ''): Promise<OutputUserDTO[]> {
-    const users = await UserSchema.find().select(fields);
-    return users;
+  async index(
+    limit: number,
+    offset: number,
+    fields: string = ''
+  ): Promise<{ users: OutputUserDTO[]; documentsCount: number }> {
+    const skipCount = offset ? (offset - 1) * limit : 0;
+    const [users, documentsCount] = await Promise.all([
+      UserSchema.find().select(fields).skip(skipCount).limit(limit),
+      UserSchema.countDocuments(),
+    ]);
+    return { users, documentsCount };
   }
 
   async delete(id: string): Promise<void> {

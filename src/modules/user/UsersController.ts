@@ -19,14 +19,23 @@ export class UsersController {
     });
   }
 
+  @CatchExpressError
   async getAllUsers(req: Request, res: Response, _next: NextFunction) {
+    const limit = Number(req.query.limit) || 0;
+    const offset = Number(req.query.offset) || 0;
+
     const getAllUsersService = new GetAllUsersService(UsersRepository);
-    const users = await getAllUsersService.execute();
+    const documents = await getAllUsersService.execute(limit, offset);
+
+    const offsets = (limit && Math.ceil(documents.documentsCount / limit)) || 0;
 
     return res.status(200).json({
       status: 'success',
-      results: users.length,
-      data: users,
+      results: documents.users.length,
+      limit: limit || documents.documentsCount,
+      offset: offset,
+      offsets: offsets,
+      data: documents.users,
     });
   }
 

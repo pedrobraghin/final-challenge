@@ -7,7 +7,11 @@ export interface IUsersRepository {
   create(input: InputUserDTO): Promise<OutputUserDTO>;
   findById(id: string, fields?: string): Promise<OutputUserDTO | null>;
   findByEmail(email: string, fields?: string): Promise<OutputUserDTO | null>;
-  index(fields?: string): Promise<OutputUserDTO[]>;
+  index(
+    limit: number,
+    offset: number,
+    fields?: string
+  ): Promise<{ users: OutputUserDTO[]; documentsCount: number }>;
   delete(id: string): Promise<void>;
   update(
     id: string,
