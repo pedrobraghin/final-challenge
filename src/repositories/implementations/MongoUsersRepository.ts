@@ -3,7 +3,7 @@ import { InputUserDTO } from '../../interfaces/InputUserDTO';
 import { UserSchema } from '../../schemas/UserSchema';
 import { IUsersRepository } from '../IUsersRepository';
 
-export class MongoUsersRespotirory implements IUsersRepository {
+export class MongoUsersRepository implements IUsersRepository {
   async findById(
     id: string,
     fields: string = ''
@@ -35,6 +35,7 @@ export class MongoUsersRespotirory implements IUsersRepository {
 
   async delete(id: string): Promise<OutputUserDTO | null> {
     const deletedUser = await UserSchema.findByIdAndRemove(id);
+
     return deletedUser;
   }
 
