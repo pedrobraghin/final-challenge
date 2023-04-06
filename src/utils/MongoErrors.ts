@@ -1,4 +1,5 @@
 import { MongoError } from 'mongodb';
+import mongoose from 'mongoose';
 
 interface ResolvedError {
   message: string;
@@ -29,5 +30,9 @@ export class MongoErrors {
         error.statusCode = 500;
     }
     return error;
+  }
+
+  static isValidId(id: string): boolean {
+    return mongoose.Types.ObjectId.isValid(id);
   }
 }
