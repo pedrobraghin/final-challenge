@@ -6,7 +6,7 @@ interface ResolvedError {
   statusCode: number;
 }
 
-export class MongoErrors {
+export class MongoUtils {
   static resolveMongoError(err: MongoError): ResolvedError {
     // regex to filter the field name in mongo error message
     const pattern = /{([^:]+):/i;
