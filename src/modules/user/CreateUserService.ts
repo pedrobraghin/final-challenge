@@ -13,7 +13,7 @@ export class CreateUserService {
   }
 
   async execute(input: InputUserDTO): Promise<OutputUserDTO> {
-    const errors = Validators.validateUser(input);
+    const errors = Validators.validateCreateUserInputData(input);
 
     if (errors) {
       throw new ValidationError(errors);
