@@ -1,12 +1,13 @@
 import { Schema, model } from 'mongoose';
+import { OutputCarDTO } from '../interfaces/OutputCarDTO';
 
-const acessorySchema = new Schema({
+const accessorySchema = new Schema({
   description: {
     type: String,
   },
 });
 
-const carSchema = new Schema({
+const carSchema = new Schema<OutputCarDTO>({
   model: {
     type: String,
     required: true,
@@ -25,13 +26,13 @@ const carSchema = new Schema({
     min: 0,
     required: true,
   },
-  number_os_passengers: {
+  number_of_passengers: {
     type: Number,
     required: true,
     min: 1,
   },
-  acessories: {
-    type: [acessorySchema],
+  accessories: {
+    type: [accessorySchema],
   },
   isReserved: {
     type: Boolean,
