@@ -33,9 +33,9 @@ export class MongoUsersRespotirory implements IUsersRepository {
     return { users, documentsCount };
   }
 
-  async delete(id: string): Promise<void> {
-    await UserSchema.findByIdAndRemove(id);
-    return;
+  async delete(id: string): Promise<OutputUserDTO | null> {
+    const deletedUser = await UserSchema.findByIdAndRemove(id);
+    return deletedUser;
   }
 
   async update(
