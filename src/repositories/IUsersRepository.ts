@@ -12,7 +12,7 @@ export interface IUsersRepository {
     offset: number,
     fields?: string
   ): Promise<{ users: OutputUserDTO[]; documentsCount: number }>;
-  delete(id: string): Promise<void>;
+  delete(id: string): Promise<OutputUserDTO | null>;
   update(
     id: string,
     input: Partial<InputUserDTO>
