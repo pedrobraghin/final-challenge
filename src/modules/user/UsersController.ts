@@ -6,6 +6,7 @@ import { InputUserDTO } from '../../interfaces/InputUserDTO';
 import { CreateUserService } from './CreateUserService';
 import { GetUserByIdService } from './GetUserByIdService';
 import { CatchExpressError } from '../../decorators/CatchExpressError';
+import { AuthenticateUserService } from './AuthenticateUserService';
 
 export class UsersController {
   @CatchExpressError
@@ -60,6 +61,19 @@ export class UsersController {
     await deleteUserByIdService.execute(id);
 
     return res.status(204).json({});
+  }
+
+  @CatchExpressError
+  async authenticateUser(req: Request, res: Response, _next: NextFunction) {
+    const { email, password } = req.body;
+    const authenticateUserService = new AuthenticateUserService(
+      UsersRepository
+    );
+    const token = await authenticateUserService.execute(email, password);
+
+    res.set('Authorization', `Bearer ${token}`);
+
+    return res.status(200).send();
   }
 }
 
