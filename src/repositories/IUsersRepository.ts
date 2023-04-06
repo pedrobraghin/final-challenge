@@ -15,6 +15,7 @@ export interface IUsersRepository {
   delete(id: string): Promise<OutputUserDTO | null>;
   update(
     id: string,
-    input: Partial<InputUserDTO>
+    input: Partial<InputUserDTO>,
+    fields?: string
   ): Promise<OutputUserDTO | null>;
 }

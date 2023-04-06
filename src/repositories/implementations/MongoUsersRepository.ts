@@ -41,11 +41,12 @@ export class MongoUsersRepository implements IUsersRepository {
 
   async update(
     id: string,
-    input: Partial<InputUserDTO>
+    input: Partial<InputUserDTO>,
+    fields: string = ''
   ): Promise<OutputUserDTO | null> {
     const updatedUser = await UserSchema.findByIdAndUpdate(id, input, {
       new: true,
-    });
+    }).select(fields);
     return updatedUser;
   }
 
