@@ -1,5 +1,6 @@
 import { InvalidParameterError } from '../../error/InvalidParameterError';
 import { IUsersRepository } from '../../repositories/IUsersRepository';
+import { PaginationUtils } from '../../utils/PaginationUtils';
 
 export class GetAllUsersService {
   private usersRepository: IUsersRepository;
@@ -9,7 +10,9 @@ export class GetAllUsersService {
   }
 
   async execute(limit: number, offset: number) {
-    if (limit < 0 || offset < 0) {
+    const isValidPagination = PaginationUtils.validatePagination(limit, offset);
+
+    if (!isValidPagination) {
       throw new InvalidParameterError(
         'Limit and offset must be numbers and greater than or equal to 0.'
       );
