@@ -22,5 +22,5 @@ export interface ICarsRepository {
     accessoryId: string,
     input: { description: string },
     fields?: string
-  ): Promise<OutputCarDTO | string>;
+  ): Promise<OutputCarDTO | BaseError>;
 }
