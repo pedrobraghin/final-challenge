@@ -1,3 +1,4 @@
+import { BaseError } from '../error/BaseError';
 import { InputCarDTO } from '../interfaces/InputCarDTO';
 import { OutputCarDTO } from '../interfaces/OutputCarDTO';
 
@@ -7,6 +8,7 @@ export interface ICarsRepository {
   index(
     limit: number,
     offset: number,
+    query: Partial<InputCarDTO>,
     fields?: string
   ): Promise<{ cars: OutputCarDTO[]; documentsCount: number }>;
   delete(id: string): Promise<OutputCarDTO | null>;
