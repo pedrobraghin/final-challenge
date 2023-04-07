@@ -2,6 +2,8 @@ import { InputCarDTO } from '../../interfaces/InputCarDTO';
 import { OutputCarDTO } from '../../interfaces/OutputCarDTO';
 import { ICarsRepository } from '../ICarsRepository';
 import { CarSchema } from '../../schemas/CarSchema';
+import { NotFoundError } from '../../error/NotFoundError';
+import { InvalidParameterError } from '../../error/InvalidParameterError';
 
 export class MongoCarsRepository implements ICarsRepository {
   async create(input: InputCarDTO): Promise<OutputCarDTO> {
@@ -20,11 +22,13 @@ export class MongoCarsRepository implements ICarsRepository {
   async index(
     limit: number,
     offset: number,
+    query: Partial<InputCarDTO>,
     fields: string = ''
   ): Promise<{ cars: OutputCarDTO[]; documentsCount: number }> {
     const skipCount = offset ? (offset - 1) * limit : 0;
+
     const [cars, documentsCount] = await Promise.all([
-      CarSchema.find().select(fields).skip(skipCount).limit(limit),
+      CarSchema.find(query).select(fields).skip(skipCount).limit(limit),
       CarSchema.countDocuments(),
     ]);
 
@@ -44,6 +48,7 @@ export class MongoCarsRepository implements ICarsRepository {
     const updatedCar = await CarSchema.findByIdAndUpdate(id, input, {
       new: true,
     }).select(fields);
+
     return updatedCar;
   }
 
