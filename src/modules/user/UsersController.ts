@@ -8,6 +8,7 @@ import { GetUserByIdService } from './GetUserByIdService';
 import { CatchExpressError } from '../../decorators/CatchExpressError';
 import { AuthenticateUserService } from './AuthenticateUserService';
 import { UpdateUserService } from './UpdateUserService';
+import { PaginationUtils } from '../../utils/PaginationUtils';
 
 export class UsersController {
   @CatchExpressError
@@ -30,14 +31,17 @@ export class UsersController {
     const getAllUsersService = new GetAllUsersService(UsersRepository);
     const documents = await getAllUsersService.execute(limit, offset);
 
-    const offsets = (limit && Math.ceil(documents.documentsCount / limit)) || 0;
+    const offsets = PaginationUtils.calculateOffets(
+      limit,
+      documents.documentsCount
+    );
 
     return res.status(200).json({
       status: 'success',
       results: documents.users.length,
       limit: limit || documents.documentsCount,
-      offset: offset,
-      offsets: offsets,
+      offset,
+      offsets,
       data: documents.users,
     });
   }
