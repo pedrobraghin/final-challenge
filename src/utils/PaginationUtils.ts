@@ -1,5 +1,5 @@
 export class PaginationUtils {
-  static calculateOffets(limit: number, itemsCount: number) {
+  static calculateOffsets(limit: number, itemsCount: number) {
     const offset = Math.ceil(itemsCount / limit);
 
     if (!limit || !itemsCount) {

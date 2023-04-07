@@ -31,7 +31,7 @@ export class UsersController {
     const getAllUsersService = new GetAllUsersService(UsersRepository);
     const documents = await getAllUsersService.execute(limit, offset);
 
-    const offsets = PaginationUtils.calculateOffets(
+    const offsets = PaginationUtils.calculateOffsets(
       limit,
       documents.documentsCount
     );
