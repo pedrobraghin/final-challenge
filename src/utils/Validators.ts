@@ -1,6 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { InputCarDTO } from '../interfaces/InputCarDTO';
 import { InputUserDTO } from '../interfaces/InputUserDTO';
+import {
+  carQueryValidator,
+  createCarInputValidator,
+  updateCarInputValidator,
+} from '../validators/carValidator';
 import {
   createUserSchema,
   updateUserSchema,
@@ -28,6 +34,41 @@ export class Validators {
   static validateUpdateUserInputData(input: Partial<InputUserDTO>) {
     const err: ValidationResult<Partial<InputUserDTO>> =
       updateUserSchema.validate(input, {
+        abortEarly: false,
+      });
+    if (err.error) {
+      return this.parseError(err.error);
+    }
+    return null;
+  }
+
+  static validateCreateCarInputData(input: InputCarDTO) {
+    const err: ValidationResult<InputCarDTO> = createCarInputValidator.validate(
+      input,
+      {
+        abortEarly: false,
+      }
+    );
+    if (err.error) {
+      return this.parseError(err.error);
+    }
+    return null;
+  }
+
+  static validateUpdateCarInputData(input: Partial<InputCarDTO>) {
+    const err: ValidationResult<Partial<InputCarDTO>> =
+      updateCarInputValidator.validate(input, {
+        abortEarly: false,
+      });
+    if (err.error) {
+      return this.parseError(err.error);
+    }
+    return null;
+  }
+
+  static validateQueryCar(query: Partial<InputCarDTO>) {
+    const err: ValidationResult<Partial<InputCarDTO>> =
+      carQueryValidator.validate(query, {
         abortEarly: false,
       });
     if (err.error) {
