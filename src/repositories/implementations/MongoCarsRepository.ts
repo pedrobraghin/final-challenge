@@ -57,28 +57,33 @@ export class MongoCarsRepository implements ICarsRepository {
     accessoryId: string,
     input: { description: string },
     fields: string = ''
-  ): Promise<OutputCarDTO | string> {
+  ): Promise<OutputCarDTO | NotFoundError> {
     const car = await CarSchema.findById(carId).select(fields);
     if (!car) {
-      return 'Car not found.';
+      return new NotFoundError('Car not found.');
     }
 
     const accessoryIndex = car.accessories.findIndex(
-      (acessory) => acessory._id === accessoryId
+      (acessory) => acessory._id.toString() === accessoryId
     );
 
     if (accessoryIndex == -1) {
-      return 'Acessory not found.';
+      return new NotFoundError('Accessory not found.');
     }
 
     if (car.accessories[accessoryIndex].description == input.description) {
+      if (car.accessories.length == 1) {
+        return new InvalidParameterError(
+          'Could not update accessory: car must have at least one accessory.'
+        );
+      }
       car.accessories.splice(accessoryIndex, 1);
     } else {
       car.accessories[accessoryIndex].description = input.description;
     }
 
-    await car.save();
+    const updatedCars = await car.save();
 
-    return car;
+    return updatedCars;
   }
 }
