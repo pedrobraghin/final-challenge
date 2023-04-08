@@ -1,0 +1,27 @@
+import { InvalidParameterError } from '../../error/InvalidParameterError';
+import { NotFoundError } from '../../error/NotFoundError';
+import { ICarsRepository } from '../../repositories/ICarsRepository';
+import { MongoUtils } from '../../utils/MongoUtils';
+
+export class GetCarByIdService {
+  private carsRepository: ICarsRepository;
+  constructor(carsRepository: ICarsRepository) {
+    this.carsRepository = carsRepository;
+  }
+
+  async execute(id: string) {
+    const isValidId = MongoUtils.isValidId(id);
+
+    if (!isValidId) {
+      throw new InvalidParameterError('Invalid ID!');
+    }
+
+    const car = await this.carsRepository.findById(id, '-__v');
+
+    if (!car) {
+      throw new NotFoundError('Car not found!');
+    }
+
+    return car;
+  }
+}
