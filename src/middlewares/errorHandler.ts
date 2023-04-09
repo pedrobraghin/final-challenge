@@ -1,8 +1,9 @@
 import { MongoError } from 'mongodb';
 import { Request, Response, NextFunction } from 'express';
 import { MongoUtils } from '../utils/MongoUtils';
-import { BaseError } from '../error/BaseError';
-import { ValidationError } from '../error/ValidationError';
+import { BaseError } from '../errors/BaseError';
+import { ValidationError } from '../errors/ValidationError';
+import { DataConflictError } from '../errors/DataConflictError';
 
 export function errorHandler(
   err: Error,
@@ -18,7 +19,7 @@ export function errorHandler(
     });
   }
 
-  if (err instanceof ValidationError) {
+  if (err instanceof ValidationError || err instanceof DataConflictError) {
     return res.status(err.statusCode).json({
       status: 'fail',
       message: err.message,
