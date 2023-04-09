@@ -1,5 +1,5 @@
-import { BaseError } from '../../error/BaseError';
-import { InvalidParameterError } from '../../error/InvalidParameterError';
+import { BaseError } from '../../errors/BaseError';
+import { InvalidParameterError } from '../../errors/InvalidParameterError';
 import { ICarsRepository } from '../../repositories/ICarsRepository';
 import { MongoUtils } from '../../utils/MongoUtils';
 

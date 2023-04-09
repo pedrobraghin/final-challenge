@@ -1,5 +1,5 @@
-import { InvalidParameterError } from '../../error/InvalidParameterError';
-import { ValidationError } from '../../error/ValidationError';
+import { InvalidParameterError } from '../../errors/InvalidParameterError';
+import { ValidationError } from '../../errors/ValidationError';
 import { InputCarDTO } from '../../interfaces/InputCarDTO';
 import { ICarsRepository } from '../../repositories/ICarsRepository';
 import { PaginationUtils } from '../../utils/PaginationUtils';
@@ -28,7 +28,7 @@ export class GetAllCarsService {
     if (Object.keys(query).length > 0) {
       const queryErrors = Validators.validateQueryCar(query);
       if (queryErrors) {
-        throw new ValidationError(queryErrors);
+        throw new ValidationError('Error validating query!', queryErrors);
       }
     }
 

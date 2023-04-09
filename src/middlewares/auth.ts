@@ -1,6 +1,6 @@
 import { GetUserByIdService } from './../modules/user/GetUserByIdService';
 import { Request, Response, NextFunction } from 'express';
-import { UnauthorizedError } from '../error/UnauthorizedError';
+import { UnauthorizedError } from '../errors/UnauthorizedError';
 import { JWTHandler } from '../jwt/JWTHandler';
 import { UsersRepository } from '../modules/user/UsersRepository';
 

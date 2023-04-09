@@ -1,6 +1,6 @@
-import { InvalidParameterError } from '../../error/InvalidParameterError';
-import { NotFoundError } from '../../error/NotFoundError';
-import { ValidationError } from '../../error/ValidationError';
+import { InvalidParameterError } from '../../errors/InvalidParameterError';
+import { NotFoundError } from '../../errors/NotFoundError';
+import { ValidationError } from '../../errors/ValidationError';
 import { InputCarDTO } from '../../interfaces/InputCarDTO';
 import { ICarsRepository } from '../../repositories/ICarsRepository';
 import { MongoUtils } from '../../utils/MongoUtils';
@@ -22,7 +22,7 @@ export class UpdateCarService {
     }
 
     if (errors) {
-      throw new ValidationError(errors);
+      throw new ValidationError('Error validating data!', errors);
     }
 
     const updatedCar = await this.carsRepository.update(id, input, '-__v');

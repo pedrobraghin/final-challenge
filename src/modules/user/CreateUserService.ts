@@ -1,10 +1,10 @@
+import FetchAddress from '../../utils/FetchAddress';
 import { InputUserDTO } from '../../interfaces/InputUserDTO';
 import { OutputUserDTO } from '../../interfaces/OutputUserDTO';
 import { IUsersRepository } from '../../repositories/IUsersRepository';
 import { PasswordUtils } from '../../utils/PasswordUtils';
-import FetchAddress from '../../utils/FetchAddress';
 import { Validators } from '../../utils/Validators';
-import { ValidationError } from '../../error/ValidationError';
+import { ValidationError } from '../../errors/ValidationError';
 export class CreateUserService {
   private usersRepository: IUsersRepository;
 
@@ -16,7 +16,7 @@ export class CreateUserService {
     const errors = Validators.validateCreateUserInputData(input);
 
     if (errors) {
-      throw new ValidationError(errors);
+      throw new ValidationError('Error validating data!', errors);
     }
 
     const address = await FetchAddress.fetchByCep(input.cep);

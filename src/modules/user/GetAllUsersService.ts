@@ -1,4 +1,4 @@
-import { InvalidParameterError } from '../../error/InvalidParameterError';
+import { InvalidParameterError } from '../../errors/InvalidParameterError';
 import { IUsersRepository } from '../../repositories/IUsersRepository';
 import { PaginationUtils } from '../../utils/PaginationUtils';
 

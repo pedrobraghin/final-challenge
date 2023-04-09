@@ -1,5 +1,5 @@
-import { InvalidParameterError } from '../../error/InvalidParameterError';
-import { UnauthorizedError } from '../../error/UnauthorizedError';
+import { InvalidParameterError } from '../../errors/InvalidParameterError';
+import { UnauthorizedError } from '../../errors/UnauthorizedError';
 import { JWTHandler } from '../../jwt/JWTHandler';
 import { IUsersRepository } from '../../repositories/IUsersRepository';
 import { PasswordUtils } from '../../utils/PasswordUtils';

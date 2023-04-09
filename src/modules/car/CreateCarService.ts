@@ -1,7 +1,7 @@
 import { ICarsRepository } from './../../repositories/ICarsRepository';
 import { InputCarDTO } from '../../interfaces/InputCarDTO';
 import { Validators } from '../../utils/Validators';
-import { ValidationError } from '../../error/ValidationError';
+import { ValidationError } from '../../errors/ValidationError';
 
 export class CreateCarService {
   private carsRepository: ICarsRepository;
@@ -14,7 +14,7 @@ export class CreateCarService {
     const errors = Validators.validateCreateCarInputData(input);
 
     if (errors) {
-      throw new ValidationError(errors);
+      throw new ValidationError('Error validating data!', errors);
     }
 
     const car = await this.carsRepository.create(input);

@@ -1,5 +1,5 @@
-import { InvalidParameterError } from '../../error/InvalidParameterError';
-import { NotFoundError } from '../../error/NotFoundError';
+import { InvalidParameterError } from '../../errors/InvalidParameterError';
+import { NotFoundError } from '../../errors/NotFoundError';
 import { IUsersRepository } from '../../repositories/IUsersRepository';
 import { MongoUtils } from '../../utils/MongoUtils';
 

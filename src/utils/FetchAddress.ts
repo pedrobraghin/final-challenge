@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ValidationError } from '../error/ValidationError';
+import { ValidationError } from '../errors/ValidationError';
 interface Address {
   patio: string;
   complement: string;
@@ -14,7 +14,9 @@ export default class FetchAddress {
     const response = await axios.get(url);
 
     if (response.data.erro) {
-      throw new ValidationError({ cep: 'CEP not found.' });
+      throw new ValidationError('CEP validation error.', {
+        cep: 'CEP not found.',
+      });
     }
 
     const address: Address = {

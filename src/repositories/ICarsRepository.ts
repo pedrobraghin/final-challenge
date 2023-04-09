@@ -1,4 +1,4 @@
-import { BaseError } from '../error/BaseError';
+import { BaseError } from '../errors/BaseError';
 import { InputCarDTO } from '../interfaces/InputCarDTO';
 import { OutputCarDTO } from '../interfaces/OutputCarDTO';
 

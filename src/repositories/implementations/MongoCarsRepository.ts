@@ -2,8 +2,8 @@ import { InputCarDTO } from '../../interfaces/InputCarDTO';
 import { OutputCarDTO } from '../../interfaces/OutputCarDTO';
 import { ICarsRepository } from '../ICarsRepository';
 import { CarSchema } from '../../schemas/CarSchema';
-import { NotFoundError } from '../../error/NotFoundError';
-import { InvalidParameterError } from '../../error/InvalidParameterError';
+import { NotFoundError } from '../../errors/NotFoundError';
+import { InvalidParameterError } from '../../errors/InvalidParameterError';
 
 export class MongoCarsRepository implements ICarsRepository {
   async create(input: InputCarDTO): Promise<OutputCarDTO> {
