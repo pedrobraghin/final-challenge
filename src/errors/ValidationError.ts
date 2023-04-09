@@ -3,8 +3,8 @@ import { BaseError } from './BaseError';
 export class ValidationError extends BaseError {
   public readonly errors: object;
 
-  constructor(errors: object) {
-    super(400, 'Error validating data');
+  constructor(message: string, errors: object) {
+    super(400, message);
     this.errors = errors;
     this.name = 'ValidationError';
   }
