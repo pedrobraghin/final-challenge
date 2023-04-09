@@ -38,8 +38,7 @@ export const createUserSchema = joiExtended.object({
     'string.min': 'Invalid CEP! CEP must contain {#limit} characters.',
     'string.max': 'Invalid CEP! CEP must contain {#limit} characters.',
   }),
-  qualified: joiExtended.string().valid('sim', 'não').required().messages({
-    'any.only': "Qualified must be 'sim' or 'não'",
+  qualified: joiExtended.boolean().required().messages({
     'any.required': 'Qualified is required',
   }),
 });
@@ -73,8 +72,7 @@ export const updateUserSchema = joiExtended.object({
     'string.min': 'Invalid CEP! CEP must contain {#limit} characters.',
     'string.max': 'Invalid CEP! CEP must contain {#limit} characters.',
   }),
-  qualified: joiExtended.string().valid('sim', 'não').optional().messages({
-    'any.only': "Qualified must be 'sim' or 'não'",
+  qualified: joiExtended.boolean().required().messages({
     'any.required': 'Qualified is required',
   }),
 });
