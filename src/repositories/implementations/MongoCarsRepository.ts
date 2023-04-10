@@ -67,23 +67,34 @@ export class MongoCarsRepository implements ICarsRepository {
       (acessory) => acessory._id.toString() === accessoryId
     );
 
+    // add new accessory
     if (accessoryIndex == -1) {
-      return new NotFoundError('Accessory not found.');
-    }
-
-    if (car.accessories[accessoryIndex].description == input.description) {
-      if (car.accessories.length == 1) {
+      const existingAccessorie = car.accessories.find(
+        (a) => a.description == input.description
+      );
+      if (existingAccessorie != undefined) {
         return new InvalidParameterError(
-          'Could not update accessory: car must have at least one accessory.'
+          'Accesory description already exists!'
         );
       }
-      car.accessories.splice(accessoryIndex, 1);
+      await car.updateOne({ $push: { accessories: input } });
     } else {
-      car.accessories[accessoryIndex].description = input.description;
+      // remove existing
+      if (car.accessories[accessoryIndex].description == input.description) {
+        if (car.accessories.length == 1) {
+          return new InvalidParameterError(
+            'Could not update accessory: car must have at least one accessory.'
+          );
+        }
+        car.accessories.splice(accessoryIndex, 1);
+      } else {
+        // update existing
+        car.accessories[accessoryIndex].description = input.description;
+      }
     }
 
-    const updatedCars = await car.save();
+    const updatedCar = await car.save();
 
-    return updatedCars;
+    return updatedCar;
   }
 }
