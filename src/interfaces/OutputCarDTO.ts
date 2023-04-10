@@ -6,5 +6,4 @@ export interface OutputCarDTO extends InputCarDTO {
     _id: string;
     description: string;
   }>;
-  isReserved: boolean;
 }
