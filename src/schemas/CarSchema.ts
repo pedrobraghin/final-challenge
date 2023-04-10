@@ -34,10 +34,6 @@ const carSchema = new Schema<OutputCarDTO>({
   accessories: {
     type: [accessorySchema],
   },
-  isReserved: {
-    type: Boolean,
-    default: false,
-  },
 });
 
 export const CarSchema = model('Car', carSchema);
