@@ -72,7 +72,7 @@ export const updateUserSchema = joiExtended.object({
     'string.min': 'Invalid CEP! CEP must contain {#limit} characters.',
     'string.max': 'Invalid CEP! CEP must contain {#limit} characters.',
   }),
-  qualified: joiExtended.boolean().required().messages({
+  qualified: joiExtended.boolean().optional().messages({
     'any.required': 'Qualified is required',
   }),
 });
