@@ -1,0 +1,1023 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Final challenge - Compass UOL PB",
+    "version": "1.0.0",
+    "description": "Rest API using MongoDB and Mongoose. Final challenge as intern at Compass UOL",
+    "contact": {
+      "name": "Pedro Braghin",
+      "email": "pedro.braghin.pb@compasso.com.br"
+    }
+  },
+  "servers": [
+    {
+      "description": "Development server",
+      "url": "http://localhost:3000/api/v1"
+    }
+  ],
+  "paths": {
+    "/user/": {
+      "post": {
+        "summary": "Create a new user",
+        "tags": ["Users"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              },
+              "examples": {
+                "Create user": {
+                  "value": {
+                    "name": "john",
+                    "email": "test2@test.com",
+                    "cpf": "935.157.370-22",
+                    "birth": "04-04-2005",
+                    "password": "123456",
+                    "passwordConfirm": "123456",
+                    "qualified": true,
+                    "cep": "16920000"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created user successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "status": "success",
+                    "data": {
+                      "name": "john",
+                      "cpf": "935.157.370-22",
+                      "birth": "04-04-2005",
+                      "email": "test2@test.com",
+                      "password": "{hashed password}",
+                      "cep": "16920000",
+                      "qualified": true,
+                      "patio": " ",
+                      "complement": " ",
+                      "neighborhood": " ",
+                      "locality": "Castilho",
+                      "uf": "SP",
+                      "_id": "643440768f20e8abf24ae16d"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Some field(s) has invalid value(s) or email/cpf was used by another user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "status": "fail",
+                    "message": "Error validating data!",
+                    "errors": {
+                      "field_name": "error message"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all users. Allow pagination and filtering by any user field is enabled.",
+        "tags": ["Users"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "offset",
+            "schema": {
+              "type": "number"
+            },
+            "description": "The desired page number"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Max number of results"
+          },
+          {
+            "in": "query",
+            "name": "name",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The user name"
+          },
+          {
+            "in": "query",
+            "name": "cpf",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The user CPF"
+          },
+          {
+            "in": "query",
+            "name": "birth",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The user birth date"
+          },
+          {
+            "in": "query",
+            "name": "email",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The user email"
+          },
+          {
+            "in": "query",
+            "name": "cep",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The user CEP"
+          },
+          {
+            "in": "query",
+            "name": "qualified",
+            "schema": {
+              "type": "boolean"
+            },
+            "description": "If the user haves driver license"
+          },
+          {
+            "in": "query",
+            "name": "patio",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Patio in user address"
+          },
+          {
+            "in": "query",
+            "name": "complement",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Complement in user address"
+          },
+          {
+            "in": "query",
+            "name": "neighborhood",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Neighborhood in user address"
+          },
+          {
+            "in": "query",
+            "name": "locality",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Locality in user address"
+          },
+          {
+            "in": "query",
+            "name": "uf",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The UF in user address"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "status": "success",
+                    "results": 1,
+                    "limit": 1,
+                    "offset": 0,
+                    "offsets": 0,
+                    "data": [
+                      {
+                        "_id": "643440768f20e8abf24ae16d",
+                        "name": "john",
+                        "cpf": "935.157.370-22",
+                        "birth": "04-04-2005",
+                        "email": "test2@test.com",
+                        "cep": "16920000",
+                        "qualified": true,
+                        "patio": " ",
+                        "complement": " ",
+                        "neighborhood": " ",
+                        "locality": "Castilho",
+                        "uf": "SP"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "This error is returned when a invalid limit or offset is given."
+          },
+          "401": {
+            "description": "User is not logged in"
+          }
+        }
+      }
+    },
+    "/user/{id}": {
+      "get": {
+        "summary": "Get user by id",
+        "tags": ["Users"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "string",
+            "description": "The user id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User found"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "400": {
+            "description": "Invalid id format"
+          },
+          "401": {
+            "description": "User is not logged in"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a user by id",
+        "tags": ["Users"],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "description": "The user id"
+          }
+        ],
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "204": {
+            "description": "User deleted successfully"
+          },
+          "400": {
+            "description": "Invalid id format"
+          },
+          "401": {
+            "description": "User is not logged in"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update user data. Any field can be updated",
+        "tags": ["Users"],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "description": "The user id"
+          }
+        ],
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "User updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "status": "success",
+                    "data": {
+                      "_id": "643440768f20e8abf24ae16d",
+                      "name": "john",
+                      "cpf": "935.157.370-22",
+                      "birth": "04-04-2005",
+                      "email": "test2@test.com",
+                      "cep": "16920000",
+                      "qualified": true,
+                      "patio": " ",
+                      "complement": " ",
+                      "neighborhood": " ",
+                      "locality": "Castilho",
+                      "uf": "SP"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Some value in body is not valid or is already in user by another user. Also can be a invalid id format"
+          },
+          "401": {
+            "description": "User is not logged in"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+
+    "/car": {
+      "post": {
+        "summary": "Create a new car",
+        "tags": ["Cars"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Car"
+              },
+              "examples": {
+                "Create car": {
+                  "value": {
+                    "model": "Porsche",
+                    "color": "black",
+                    "year": 2023,
+                    "value_per_day": 5000,
+                    "accessories": [
+                      {
+                        "description": "Bicycle racks"
+                      }
+                    ],
+                    "number_of_passengers": 4
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "201": {
+            "description": "Created car successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "status": "success",
+                    "data": {
+                      "model": "Porsche",
+                      "color": "black",
+                      "year": 2023,
+                      "value_per_day": 5000,
+                      "number_of_passengers": 4,
+                      "accessories": [
+                        {
+                          "description": "Bicycle racks",
+                          "_id": "64344da077ab4b941497c9c2"
+                        }
+                      ],
+                      "_id": "64344da077ab4b941497c9c1"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "User is not logged in"
+          },
+          "400": {
+            "description": "Some value in body is not valid."
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all cars. Allow pagination and filtering by any car field is enabled.",
+        "tags": ["Cars"],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "offset",
+            "schema": {
+              "type": "number"
+            },
+            "description": "The desired page number"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Max number of results"
+          },
+          {
+            "in": "query",
+            "name": "model",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The car model"
+          },
+          {
+            "in": "query",
+            "name": "color",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The car color"
+          },
+          {
+            "in": "query",
+            "name": "year",
+            "schema": {
+              "type": "number"
+            },
+            "description": "The car fabrication year"
+          },
+          {
+            "in": "query",
+            "name": "value_per_day",
+            "schema": {
+              "type": "number"
+            },
+            "description": "The cost per day to rental the car"
+          },
+          {
+            "in": "query",
+            "name": "number_of_passengers",
+            "schema": {
+              "type": "number"
+            },
+            "description": "The number of passengers the car can hold"
+          },
+          {
+            "in": "query",
+            "name": "accessories.description",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Description of an accessory in the car"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of cars"
+          }
+        }
+      }
+    },
+    "/car/{id}": {
+      "get": {
+        "summary": "Get car by id",
+        "tags": ["Cars"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "string",
+            "description": "The car id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Car found"
+          },
+          "400": {
+            "description": "Invalid id format"
+          },
+          "404": {
+            "description": "Car not found"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update car data. Any field can be updated",
+        "tags": ["Cars"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "string",
+            "description": "The car id",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "model": "Ferrari"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated car successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "status": "success",
+                    "data": {
+                      "_id": "643361ae745c1ecd093b8a19",
+                      "model": "Ferrari",
+                      "color": "black",
+                      "year": 2023,
+                      "value_per_day": 5000,
+                      "number_of_passengers": 4,
+                      "accessories": [
+                        {
+                          "description": "Bicycle racks",
+                          "_id": "64344da077ab4b941497c9c2"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Some value in body is not valid or invalid id format."
+          },
+          "401": {
+            "description": "User is not logged in"
+          },
+          "404": {
+            "description": "Car not found."
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a car by id",
+        "tags": ["Cars"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "string",
+            "description": "The car id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Car deleted successfuly"
+          },
+          "400": {
+            "description": "Invalid id format"
+          },
+          "401": {
+            "description": "User is not logged in"
+          },
+          "404": {
+            "description": "Car not found"
+          }
+        }
+      }
+    },
+    "/car/{carId}/accessories/{accessoryId}": {
+      "patch": {
+        "summary": "Update one accessory in a car. Can be updating, addition or removal",
+        "tags": ["Cars"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "carId",
+            "type": "string",
+            "description": "The car id",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "accessoryId",
+            "type": "string",
+            "description": "The car accessory id",
+            "required": true
+          }
+        ],
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "description": "4x4"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Accessory added, updated or removed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "status": "success",
+                    "data": {
+                      "_id": "643361ae745c1ecd093b8a19",
+                      "model": "Ferrari",
+                      "color": "black",
+                      "year": 2023,
+                      "value_per_day": 5000,
+                      "number_of_passengers": 4,
+                      "accessories": [
+                        {
+                          "description": "4x4",
+                          "_id": "643363fe5897d3a7f2d9a5bb"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid car and/or accessory id format"
+          },
+          "401": {
+            "description": "User is not logged in"
+          },
+          "404": {
+            "description": "Car or accessory not found"
+          }
+        }
+      }
+    },
+
+    "/reserve": {
+      "post": {
+        "summary": "Create a new reservation",
+        "tags": ["Reservations"],
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Reservation"
+              },
+              "examples": {
+                "Create reservation": {
+                  "value": {
+                    "id_car": "643361ae745c1ecd093b8a19",
+                    "start_date": "05-16-2023",
+                    "end_date": "05-28-2023"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Reservation created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "status": "success",
+                    "data": {
+                      "id_user": "643440768f20e8abf24ae16d",
+                      "id_car": "64344da077ab4b941497c9c1",
+                      "start_date": "05-16-2023",
+                      "end_date": "05-28-2023",
+                      "final_value": 60000,
+                      "_id": "643462c25cb1866fffa5e041"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Some value in body is not valid or invalid id format."
+          },
+          "401": {
+            "description": "User is not logged in"
+          },
+          "403": {
+            "description": "User is not qualified"
+          },
+          "404": {
+            "description": "Car not found"
+          },
+          "409": {
+            "description": "The car has already been rented for the specified date or the user already has a reservation for the same date"
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all user reservations",
+        "tags": ["Reservations"],
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "All user reservations",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "status": "success",
+                    "results": 1,
+                    "limit": 1,
+                    "offset": 0,
+                    "offsets": 0,
+                    "data": [
+                      {
+                        "_id": "643463942567f24956962b36",
+                        "id_user": "643440768f20e8abf24ae16d",
+                        "id_car": "64344da077ab4b941497c9c1",
+                        "start_date": "04-16-2023",
+                        "end_date": "04-28-2023",
+                        "final_value": 60000
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "User is not logged in"
+          }
+        }
+      }
+    },
+    "/reserve/{id}": {
+      "get": {
+        "summary": "Get reservation by id",
+        "tags": ["Reservations"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "string",
+            "description": "The reservation id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Reservation found"
+          },
+          "400": {
+            "description": "Invalid id format"
+          },
+          "401": {
+            "description": "User is not logged in"
+          },
+          "404": {
+            "description": "Reservation not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a reservation by id",
+        "tags": ["Reservations"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "string",
+            "description": "The reservation id",
+            "required": true
+          }
+        ],
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "204": {
+            "description": "Reservation deleted successfully"
+          },
+          "400": {
+            "description": "Invalid id format"
+          },
+          "401": {
+            "description": "User is not logged in"
+          },
+          "404": {
+            "description": "Reservation not found"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a reservation by id",
+        "tags": ["Reservations"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "string",
+            "description": "The reservation id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Reservation updated successfully"
+          },
+          "400": {
+            "description": "Invalid id format"
+          },
+          "401": {
+            "description": "User is not logged in"
+          },
+          "404": {
+            "description": "Reservation not found"
+          },
+          "409": {
+            "description": "The car has already been rented for the specified date or the user already has a reservation for the same date"
+          }
+        }
+      }
+    },
+
+    "/authenticate": {
+      "post": {
+        "summary": "Route for user to login",
+        "tags": ["Authenticate"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Authorization"
+              },
+              "examples": {
+                "Login user": {
+                  "value": {
+                    "email": "test2@test.com",
+                    "password": "123456"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Succesfuly logged in",
+            "headers": {
+              "Authorization": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "The JWT token"
+              }
+            }
+          },
+          "400": {
+            "description": "Email or password is missing"
+          },
+          "401": {
+            "description": "Invalid email or password"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "cpf": {
+            "type": "string"
+          },
+          "birth": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "passwordConfirm": {
+            "type": "string"
+          },
+          "qualified": {
+            "type": "boolean"
+          }
+        }
+      },
+      "Car": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "type": "string"
+          },
+          "color": {
+            "type": "string"
+          },
+          "year": {
+            "type": "number"
+          },
+          "value_per_day": {
+            "type": "number"
+          },
+          "accessories": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "description": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "number_of_passengers": {
+            "type": "number"
+          }
+        }
+      },
+      "Reservation": {
+        "type": "object",
+        "properties": {
+          "id_car": {
+            "type": "string",
+            "required": true
+          },
+          "start_date": {
+            "type": "string",
+            "required": true
+          },
+          "end_date": {
+            "type": "string",
+            "required": true
+          }
+        }
+      },
+      "Authorization": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "required": true
+          },
+          "password": {
+            "type": "string",
+            "required": true
+          }
+        }
+      }
+    }
+  }
+}
