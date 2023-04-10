@@ -31,7 +31,7 @@ const schema = new Schema<OutputUserDTO>({
     required: true,
   },
   qualified: {
-    type: String,
+    type: Boolean,
     required: true,
   },
   patio: {
