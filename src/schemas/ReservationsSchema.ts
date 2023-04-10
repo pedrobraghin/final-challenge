@@ -1,13 +1,14 @@
 import { Schema, model } from 'mongoose';
+import { OutputReservationDTO } from '../interfaces/OutputReservationDTO';
 
-const schema = new Schema({
+const schema = new Schema<OutputReservationDTO>({
   id_user: {
-    type: Schema.Types.ObjectId,
+    type: String,
     required: true,
     ref: 'User',
   },
   id_car: {
-    type: Schema.Types.ObjectId,
+    type: String,
     required: true,
     ref: 'Car',
   },
@@ -21,6 +22,8 @@ const schema = new Schema({
   },
   final_value: {
     type: Number,
+    required: true,
+    min: 0,
   },
 });
 
