@@ -1,5 +1,6 @@
 import joiDate from '@joi/date';
 import Joi from 'joi';
+import { Validators } from '../utils/Validators';
 
 const joiExtended = Joi.extend(joiDate);
 const minBirthDate = new Date();
@@ -7,14 +8,17 @@ const currentDate = new Date();
 minBirthDate.setFullYear(currentDate.getFullYear() - 18);
 minBirthDate.setDate(currentDate.getDate() - 1);
 
-const cpfRegex = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/;
-
 export const createUserSchema = joiExtended.object({
   name: joiExtended.string().required(),
-  cpf: joiExtended.string().regex(cpfRegex).required().messages({
-    'string.pattern.base':
-      'Invalid CPF! CPF must follow pattern: XXX.XXX.XXX-XX.',
-  }),
+  cpf: joiExtended
+    .string()
+    .custom((cpf: string, helpers: any) => {
+      if (!Validators.validateCPF(cpf)) {
+        return helpers.message('Invalid CPF!');
+      }
+      return cpf;
+    })
+    .required(),
   birth: joiExtended
     .date()
     .format('DD-MM-YYYY')
@@ -45,10 +49,15 @@ export const createUserSchema = joiExtended.object({
 
 export const updateUserSchema = joiExtended.object({
   name: joiExtended.string().optional(),
-  cpf: joiExtended.string().regex(cpfRegex).optional().messages({
-    'string.pattern.base':
-      'Invalid CPF! CPF must follow pattern: XXX.XXX.XXX-XX.',
-  }),
+  cpf: joiExtended
+    .string()
+    .custom((cpf: string, helpers: any) => {
+      if (!Validators.validateCPF(cpf)) {
+        return helpers.message('Invalid CPF!');
+      }
+      return cpf;
+    })
+    .optional(),
   birth: joiExtended
     .date()
     .format('DD-MM-YYYY')
