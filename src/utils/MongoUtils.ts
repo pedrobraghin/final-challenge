@@ -35,4 +35,22 @@ export class MongoUtils {
   static isValidId(id: string): boolean {
     return isObjectIdOrHexString(id);
   }
+
+  static generateDateConflictQuery(startDate: string, endDate: string) {
+    return [
+      { start_date: { $gte: startDate, $lte: endDate } },
+      {
+        start_date: { $lt: startDate },
+        end_date: { $gt: endDate },
+      },
+      {
+        start_date: { $lt: startDate },
+        end_date: { $gte: startDate, $lte: endDate },
+      },
+      {
+        start_date: { $gte: startDate, $lte: endDate },
+        end_date: { $gt: endDate },
+      },
+    ];
+  }
 }
