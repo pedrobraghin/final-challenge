@@ -6,5 +6,5 @@ export interface InputUserDTO {
   password: string;
   passwordConfirm: string;
   cep: string;
-  qualified: string;
+  qualified: boolean;
 }
