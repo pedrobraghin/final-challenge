@@ -4,6 +4,7 @@ import { ValidationError } from '../../errors/ValidationError';
 import { InputUserDTO } from '../../interfaces/InputUserDTO';
 import { IUsersRepository } from '../../repositories/IUsersRepository';
 import { MongoUtils } from '../../utils/MongoUtils';
+import { PasswordUtils } from '../../utils/PasswordUtils';
 import { Validators } from '../../utils/Validators';
 
 export class UpdateUserService {
@@ -29,6 +30,10 @@ export class UpdateUserService {
 
     if (errors) {
       throw new ValidationError('Invalid fields!', errors);
+    }
+
+    if (input.password) {
+      input.password = await PasswordUtils.hashPass(input.password);
     }
 
     const updatedUser = await this.usersRepository.update(id, input, '-__v');
