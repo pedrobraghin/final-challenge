@@ -94,6 +94,7 @@ export class MongoReservationRepository implements IReservationsRepository {
   }
 
   async index(
+    userId: string,
     limit: number,
     offset: number,
     query: Partial<InputReservationDTO>,
@@ -102,7 +103,10 @@ export class MongoReservationRepository implements IReservationsRepository {
     const skipCount = offset ? (offset - 1) * limit : 0;
 
     const [reservations, documentsCount] = await Promise.all([
-      ReservationSchema.find(query).skip(skipCount).limit(limit).select(fields),
+      ReservationSchema.find({ ...query, id_user: userId })
+        .skip(skipCount)
+        .limit(limit)
+        .select(fields),
       ReservationSchema.countDocuments(),
     ]);
 

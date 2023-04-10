@@ -6,6 +6,7 @@ export interface IReservationsRepository {
   create(input: InputReservationDTO): Promise<OutputReservationDTO | BaseError>;
   findById(id: string, fields?: string): Promise<OutputReservationDTO | null>;
   index(
+    userId: string,
     limit: number,
     offset: number,
     query: Partial<InputReservationDTO>,

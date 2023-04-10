@@ -31,12 +31,13 @@ export class ReservationsController {
   async getAllReservations(req: Request, res: Response, _next: NextFunction) {
     const limit = Number(req.query.limit) || 0;
     const offset = Number(req.query.offset) || 0;
-
+    const { user } = req.app.locals;
     const getAllReservationsService = new GetAllReservationsService(
       ReservationsRepository
     );
 
     const documents = await getAllReservationsService.execute(
+      user._id,
       limit,
       offset,
       req.query

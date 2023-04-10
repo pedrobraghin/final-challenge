@@ -11,6 +11,7 @@ export class GetAllReservationsService {
   }
 
   async execute(
+    userId: string,
     limit: number,
     offset: number,
     query: Partial<InputReservationDTO> = {}
@@ -24,6 +25,7 @@ export class GetAllReservationsService {
     }
 
     const reservations = await this.reservationsRepository.index(
+      userId,
       limit,
       offset,
       query,
