@@ -1,14 +1,8 @@
-<h1 align="center">Challenge #01</h1>
+<h1 align="center">Final challenge</h1>
 
 <p align="center">
   <i>Final challenge of the Compass UOL Scholarship Program: Back-end Journey (Node.js) - AWS Cloud Context - 01/16/2023.</i>
-  <p>The goal of this challenge are to implement a RESTful API to do car rentals.</p>
-</p>
-
-<p align="center">
-  <a href="#" target="_blank">
-    <img src="https://img.shields.io/badge/v1-docs-19C034?style=flat.svg">
-  </a>
+  <p align="center">The goal of this challenge are to implement a RESTful API to do car rentals.</p>
 </p>
 
 <hr>
@@ -28,6 +22,8 @@
 ### Prerequisites
 
 - Install <strong>[Git][git]</strong> and <strong>[Node.js][node]</strong> (which includes [Node Package Manager][npm])
+
+<hr>
 
 1. Certify that Node v18.13.0 or any posterior Major 18 version is installed;
 
