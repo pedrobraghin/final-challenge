@@ -3,6 +3,7 @@ import { NotFoundError } from '../../errors/NotFoundError';
 import { ValidationError } from '../../errors/ValidationError';
 import { InputUserDTO } from '../../interfaces/InputUserDTO';
 import { IUsersRepository } from '../../repositories/IUsersRepository';
+import FetchAddress from '../../utils/FetchAddress';
 import { MongoUtils } from '../../utils/MongoUtils';
 import { PasswordUtils } from '../../utils/PasswordUtils';
 import { Validators } from '../../utils/Validators';
@@ -34,6 +35,11 @@ export class UpdateUserService {
 
     if (input.password) {
       input.password = await PasswordUtils.hashPass(input.password);
+    }
+
+    if (input.cep) {
+      const address = await FetchAddress.fetchByCep(input.cep);
+      Object.assign(input, address);
     }
 
     const updatedUser = await this.usersRepository.update(id, input, '-__v');
