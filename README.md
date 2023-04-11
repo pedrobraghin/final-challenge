@@ -2,7 +2,7 @@
 
 <p align="center">
   <i>Final challenge of the Compass UOL Scholarship Program: Back-end Journey (Node.js) - AWS Cloud Context - 01/16/2023.</i>
-  <p align="center">The goal of this challenge are to implement a RESTful API to do car rentals.</p>
+  <p align="center">The goal of this challenge is to implement a RESTful API to do car rentals.</p>
 </p>
 
 <hr>
